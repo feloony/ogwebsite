@@ -24,7 +24,6 @@
             position: relative;
         }
 
-        /* Background glow effect */
         .glow-bg {
             position: absolute;
             width: 400px;
@@ -68,7 +67,6 @@
             font-weight: 300;
         }
 
-        /* Countdown Timer Styling */
         .countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -103,7 +101,6 @@
             font-weight: 600;
         }
 
-        /* Notify Form */
         .notify-form {
             display: flex;
             gap: 0.5rem;
@@ -147,11 +144,10 @@
             transform: scale(0.98);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .countdown {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+                gap: 1.0rem;
             }
             .notify-form {
                 flex-direction: column;
@@ -167,7 +163,6 @@
         <h1>Coming <span>Soon</span></h1>
         <p>We are crafting something extraordinary. Stay tuned for the grand reveal.</p>
 
-        <!-- Countdown Timer -->
         <div class="countdown" id="countdown">
             <div class="time-box">
                 <span id="days">10</span>
@@ -187,7 +182,6 @@
             </div>
         </div>
 
-        <!-- Email Notify Form -->
         <form class="notify-form" onsubmit="event.preventDefault(); alert('Thank you! You will be notified when we launch.');">
             <input type="email" placeholder="Enter your email address" required>
             <button type="submit">Notify Me</button>
@@ -195,26 +189,23 @@
     </div>
 
     <script>
-        // Set the countdown target to exactly 10 days from right now
         const countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
 
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the results in the respective elements
             document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(xx = 2, '0').replace('xx=',''); // Cleaned up
             document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
             document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
             document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
 
-            // If the countdown is finished, write some text
             if (distance < 0) {
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "<h2 style='grid-column: span 4; color: #dc143c; font-family: Orbitron, sans-serif;'>WE ARE LIVE!</h2>";
