@@ -520,10 +520,10 @@
             <span>All systems operational &bull; Core Infrastructure v1.0 online</span>
         </div>
 
-        <!-- Live Countdown Timer -->
+        <!-- Live Countdown Timer (Initialized to 00 to avoid flash) -->
         <div class="countdown" id="countdown">
             <div class="time-box">
-                <span id="days">10</span>
+                <span id="days">00</span>
                 <label>Days</label>
             </div>
             <div class="time-box">
@@ -576,9 +576,9 @@
         <div class="modal-content">
             <h2>Changelog & Updates</h2>
             <ul>
+                <li><strong>v1.0.5</strong> - Eliminated countdown flash flicker on page load.</li>
                 <li><strong>v1.0.4</strong> - Hardcoded fixed target date to prevent file:// storage resets.</li>
                 <li><strong>v1.0.2</strong> - Added client-side mini toolkits and live status indicator.</li>
-                <li><strong>v1.0.1</strong> - Integrated theme toggle and modal controls.</li>
             </ul>
             <button class="close-modal" onclick="toggleModal(false)">Close</button>
         </div>
@@ -590,12 +590,10 @@
     </footer>
 
     <script>
-        // Set a permanent absolute target date (Change this exact date string if you want a different launch day)
-        // Format: "Month Day, Year HH:MM:SS"
         const launchDateString = "September 26, 2026 00:00:00";
         const countDownDate = new Date(launchDateString).getTime();
 
-        const x = setInterval(function() {
+        function updateCountdown() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
@@ -613,7 +611,11 @@
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "<h2 style='grid-column: span 4; color: var(--accent-1); font-family: Orbitron, sans-serif;'>OPENUTILITY IS NOW LIVE!</h2>";
             }
-        }, 1000);
+        }
+
+        // Run immediately on script load so values render instantly without waiting 1 second
+        updateCountdown();
+        const x = setInterval(updateCountdown, 1000);
 
         // Dark/Light Theme Switcher Logic
         function toggleTheme() {
