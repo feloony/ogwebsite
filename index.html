@@ -578,9 +578,9 @@
         <div class="modal-content">
             <h2>Changelog & Updates</h2>
             <ul>
+                <li><strong>v1.0.3</strong> - Fixed persistent countdown state reset issue.</li>
                 <li><strong>v1.0.2</strong> - Added client-side mini toolkits and live status indicator.</li>
-                <li><strong>v1.0.1</strong> - Integrated persistent countdown via LocalStorage.</li>
-                <li><strong>v1.0.0</strong> - Initial coming soon layout framework established.</li>
+                <li><strong>v1.0.1</strong> - Integrated theme toggle and modal controls.</li>
             </ul>
             <button class="close-modal" onclick="toggleModal(false)">Close</button>
         </div>
@@ -592,12 +592,14 @@
     </footer>
 
     <script>
-        // 1. Persistent Countdown Logic via localStorage
-        let countDownDate = localStorage.getItem("openUtilityLaunchDate");
+        // Fixed Persistent Countdown Logic using a fixed target launch timestamp (10 days from initial creation saved permanently)
+        const STORAGE_KEY = "openUtility_launch_timestamp";
+        let countDownDate = localStorage.getItem(STORAGE_KEY);
 
         if (!countDownDate) {
+            // Set it 10 days into the future from right now, only once
             countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
-            localStorage.setItem("openUtilityLaunchDate", countDownDate);
+            localStorage.setItem(STORAGE_KEY, countDownDate);
         } else {
             countDownDate = parseInt(countDownDate, 10);
         }
@@ -622,7 +624,7 @@
             }
         }, 1000);
 
-        // 2. Dark/Light Theme Switcher Logic
+        // Dark/Light Theme Switcher Logic
         function toggleTheme() {
             const body = document.body;
             const themeIcon = document.getElementById("theme-icon");
@@ -641,7 +643,6 @@
             }
         }
 
-        // Load saved theme preference on page load
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem("openUtilityTheme");
             if (savedTheme === "light") {
@@ -651,7 +652,7 @@
             }
         });
 
-        // 3. Changelog Modal Controller
+        // Changelog Modal Controller
         function toggleModal(show) {
             const modal = document.getElementById("changelogModal");
             if (show) {
@@ -661,7 +662,7 @@
             }
         }
 
-        // 4. Mini Dev Tool Functionality (Base64 Encoder/Decoder)
+        // Mini Dev Tool Functionality (Base64 Encoder/Decoder)
         function encodeBase64() {
             const input = document.getElementById("tool-input").value;
             try {
