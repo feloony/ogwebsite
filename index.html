@@ -18,7 +18,8 @@
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
             overflow-x: hidden;
             position: relative;
@@ -56,6 +57,7 @@
             padding: 2.5rem 1.5rem;
             max-width: 850px;
             width: 100%;
+            margin: auto;
         }
 
         /* OpenUtility Logo & Brand Header */
@@ -210,6 +212,25 @@
             transform: scale(0.98);
         }
 
+        /* Footer Styles */
+        footer {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+            padding: 1.5rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(30, 41, 59, 0.5);
+            background: rgba(8, 13, 18, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        footer p {
+            margin-bottom: 0;
+            font-size: 0.85rem;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 600px) {
             .countdown {
@@ -267,9 +288,22 @@
         </form>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 OpenUtility. All rights reserved.</p>
+    </footer>
+
     <script>
-        // Set launch target precisely 10 days from current moment
-        const countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
+        // Check if a target countdown date already exists in localStorage
+        let countDownDate = localStorage.getItem("openUtilityLaunchDate");
+
+        if (!countDownDate) {
+            // If not, set it to 10 days from the current moment and save it
+            countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
+            localStorage.setItem("openUtilityLaunchDate", countDownDate);
+        } else {
+            countDownDate = parseInt(countDownDate, 10);
+        }
 
         const x = setInterval(function() {
             const now = new Date().getTime();
@@ -282,10 +316,10 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display formatted numbers
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            document.getElementById("days").innerText = String(Math.max(0, days)).padStart(2, '0');
+            document.getElementById("hours").innerText = String(Math.max(0, hours)).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(Math.max(0, minutes)).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(Math.max(0, seconds)).padStart(2, '0');
 
             // Expiry state
             if (distance < 0) {
