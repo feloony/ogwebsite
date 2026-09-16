@@ -495,7 +495,7 @@
 
     <div class="container">
         
-        <!-- Top Bar Controls (Logo, Theme Toggle, Changelog Button) -->
+        <!-- Top Bar Controls -->
         <div class="top-controls">
             <div class="brand-header">
                 <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -540,9 +540,8 @@
             </div>
         </div>
 
-        <!-- Widgets Grid (Mini Developer Utilities Hub & Roadmap) -->
+        <!-- Widgets Grid -->
         <div class="widgets-grid">
-            <!-- Mini Tool Card -->
             <div class="widget-card">
                 <h3>🛠️ Quick Dev Utility</h3>
                 <div class="tool-group">
@@ -555,7 +554,6 @@
                 </div>
             </div>
 
-            <!-- Interactive Roadmap Card -->
             <div class="widget-card">
                 <h3>🗺️ Upcoming Roadmap</h3>
                 <ul class="roadmap-list">
@@ -578,7 +576,7 @@
         <div class="modal-content">
             <h2>Changelog & Updates</h2>
             <ul>
-                <li><strong>v1.0.3</strong> - Fixed persistent countdown state reset issue.</li>
+                <li><strong>v1.0.4</strong> - Hardcoded fixed target date to prevent file:// storage resets.</li>
                 <li><strong>v1.0.2</strong> - Added client-side mini toolkits and live status indicator.</li>
                 <li><strong>v1.0.1</strong> - Integrated theme toggle and modal controls.</li>
             </ul>
@@ -592,17 +590,10 @@
     </footer>
 
     <script>
-        // Fixed Persistent Countdown Logic using a fixed target launch timestamp (10 days from initial creation saved permanently)
-        const STORAGE_KEY = "openUtility_launch_timestamp";
-        let countDownDate = localStorage.getItem(STORAGE_KEY);
-
-        if (!countDownDate) {
-            // Set it 10 days into the future from right now, only once
-            countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
-            localStorage.setItem(STORAGE_KEY, countDownDate);
-        } else {
-            countDownDate = parseInt(countDownDate, 10);
-        }
+        // Set a permanent absolute target date (Change this exact date string if you want a different launch day)
+        // Format: "Month Day, Year HH:MM:SS"
+        const launchDateString = "September 26, 2026 00:00:00";
+        const countDownDate = new Date(launchDateString).getTime();
 
         const x = setInterval(function() {
             const now = new Date().getTime();
