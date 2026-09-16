@@ -97,7 +97,7 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #777;
+/            color: #777;
             font-weight: 600;
         }
 
@@ -147,7 +147,7 @@
         @media (max-width: 600px) {
             .countdown {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1.0rem;
+                gap: 1rem;
             }
             .notify-form {
                 flex-direction: column;
@@ -163,6 +163,7 @@
         <h1>Coming <span>Soon</span></h1>
         <p>We are crafting something extraordinary. Stay tuned for the grand reveal.</p>
 
+        <!-- Countdown Timer: Days / Hours / Minutes / Seconds -->
         <div class="countdown" id="countdown">
             <div class="time-box">
                 <span id="days">10</span>
@@ -189,6 +190,7 @@
     </div>
 
     <script>
+        // Sets target exactly 10 days from the current moment
         const countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
 
         const x = setInterval(function() {
@@ -201,7 +203,6 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("days").innerHTML = String(days).padStart(2, '0');
-            document.getElementById("hours").innerHTML = String(hours).padStart(xx = 2, '0').replace('xx=',''); // Cleaned up
             document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
             document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
             document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
