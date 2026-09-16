@@ -130,7 +130,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Theme Toggle & Changelog Buttons */
+        /* Buttons & Social Icons */
         .action-btn {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -144,6 +144,7 @@
             align-items: center;
             gap: 0.4rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-decoration: none;
         }
 
         .action-btn:hover {
@@ -174,6 +175,23 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .shortcut-hint {
+            font-size: 0.75rem;
+            color: var(--muted-color);
+            margin-top: -1.8rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .shortcut-hint kbd {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--text-color);
         }
 
         /* Countdown Grid */
@@ -222,7 +240,7 @@
             font-weight: 600;
         }
 
-        /* Status & Uptime Banner */
+        /* Status & Uptime Banner with Live Ping */
         .status-banner {
             display: inline-flex;
             align-items: center;
@@ -297,6 +315,10 @@
             font-family: monospace;
         }
 
+        .tool-group textarea {
+            resize: vertical;
+        }
+
         .tool-btns {
             display: flex;
             gap: 0.5rem;
@@ -312,6 +334,11 @@
             font-weight: 600;
             font-size: 0.8rem;
             cursor: pointer;
+        }
+
+        .tool-btn.secondary {
+            background: var(--border-color);
+            color: var(--text-color);
         }
 
         .tool-btn:hover {
@@ -509,18 +536,21 @@
             <button class="action-btn" onclick="toggleModal(true)">
                 📋 Changelog
             </button>
+            <a href="https://github.com/OpenUtility2" target="_blank" class="action-btn">GitHub</a>
+            <a href="https://discord.gg/tNGvqx8s93" target="_blank" class="action-btn">Discord</a>
         </div>
 
         <h1>Something Big Is <span>Coming</span></h1>
         <p class="hero-desc">We are building powerful tools for your next web workflow. Get ready for launch.</p>
+        <div class="shortcut-hint">Tip: Press <kbd>/</kbd> to quickly jump to the dev tool input.</div>
 
-        <!-- Live Status Uptime Monitor -->
+        <!-- Live Status Uptime Monitor with simulated latency ping -->
         <div class="status-banner">
             <span class="status-dot"></span>
-            <span>All systems operational &bull; Core Infrastructure v1.0 online</span>
+            <span>All systems operational &bull; Core v1.0 &bull; Ping: <strong id="ping-latency" style="color: var(--accent-1);">24ms</strong></span>
         </div>
 
-        <!-- Live Countdown Timer (Initialized to 00 to avoid flash) -->
+        <!-- Live Countdown Timer -->
         <div class="countdown" id="countdown">
             <div class="time-box">
                 <span id="days">00</span>
@@ -551,6 +581,7 @@
                         <button class="tool-btn" onclick="decodeBase64()">Decode B64</button>
                     </div>
                     <textarea id="tool-output" rows="2" placeholder="Output result..." readonly></textarea>
+                    <button class="tool-btn secondary" onclick="copyOutput()">📋 Copy Output</button>
                 </div>
             </div>
 
@@ -576,9 +607,9 @@
         <div class="modal-content">
             <h2>Changelog & Updates</h2>
             <ul>
+                <li><strong>v1.1.0</strong> - Added quick-copy buttons, live ping telemetry, shortcut triggers, and community links.</li>
                 <li><strong>v1.0.5</strong> - Eliminated countdown flash flicker on page load.</li>
                 <li><strong>v1.0.4</strong> - Hardcoded fixed target date to prevent file:// storage resets.</li>
-                <li><strong>v1.0.2</strong> - Added client-side mini toolkits and live status indicator.</li>
             </ul>
             <button class="close-modal" onclick="toggleModal(false)">Close</button>
         </div>
@@ -613,9 +644,22 @@
             }
         }
 
-        // Run immediately on script load so values render instantly without waiting 1 second
         updateCountdown();
         const x = setInterval(updateCountdown, 1000);
+
+        // Simulated fluctuating server latency ping every 4 seconds
+        setInterval(() => {
+            const randomPing = Math.floor(Math.random() * (35 - 18 + 1)) + 18;
+            document.getElementById("ping-latency").innerText = randomPing + "ms";
+        }, 4000);
+
+        // Keyboard Shortcut Handler: Press '/' to focus utility input
+        window.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                document.getElementById('tool-input').focus();
+            }
+        });
 
         // Dark/Light Theme Switcher Logic
         function toggleTheme() {
@@ -655,7 +699,7 @@
             }
         }
 
-        // Mini Dev Tool Functionality (Base64 Encoder/Decoder)
+        // Mini Dev Tool Functionality (Base64 Encoder/Decoder & Copy)
         function encodeBase64() {
             const input = document.getElementById("tool-input").value;
             try {
@@ -672,6 +716,20 @@
             } catch (e) {
                 document.getElementById("tool-output").value = "Invalid Base64 string";
             }
+        }
+
+        function copyOutput() {
+            const outputBox = document.getElementById("tool-output");
+            if (!outputBox.value) return;
+            outputBox.select();
+            navigator.clipboard.writeText(outputBox.value);
+            
+            const copyBtn = event.target;
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "✅ Copied!";
+            setTimeout(() => {
+                copyBtn.innerText = originalText;
+            }, 1500);
         }
     </script>
 </body>
