@@ -3,18 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenUtility — Coming Soon</title>
+    <title>OpenUtility — Coming Soon & Toolkit</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #080d12;
+            --text-color: #f8fafc;
+            --muted-color: #94a3b8;
+            --panel-bg: #0f172a;
+            --border-color: #1e293b;
+            --accent-1: #10b981;
+            --accent-2: #3b82f6;
+            --glow-1: rgba(16, 185, 129, 0.15);
+            --glow-2: rgba(59, 130, 246, 0.15);
+            --footer-bg: rgba(8, 13, 18, 0.8);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --text-color: #0f172a;
+            --muted-color: #64748b;
+            --panel-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --accent-1: #059669;
+            --accent-2: #2563eb;
+            --glow-1: rgba(5, 150, 105, 0.08);
+            --glow-2: rgba(37, 99, 235, 0.08);
+            --footer-bg: rgba(241, 245, 249, 0.9);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
-            background-color: #080d12;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
@@ -30,7 +57,7 @@
             position: absolute;
             width: 450px;
             height: 450px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(8, 13, 18, 0) 70%);
+            background: radial-gradient(circle, var(--glow-1) 0%, rgba(8, 13, 18, 0) 70%);
             top: 25%;
             left: 35%;
             transform: translate(-50%, -50%);
@@ -42,7 +69,7 @@
             position: absolute;
             width: 450px;
             height: 450px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(8, 13, 18, 0) 70%);
+            background: radial-gradient(circle, var(--glow-2) 0%, rgba(8, 13, 18, 0) 70%);
             top: 65%;
             left: 65%;
             transform: translate(-50%, -50%);
@@ -55,9 +82,19 @@
             z-index: 2;
             text-align: center;
             padding: 2.5rem 1.5rem;
-            max-width: 850px;
+            max-width: 900px;
             width: 100%;
             margin: auto;
+        }
+
+        /* Top Bar Controls */
+        .top-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         /* OpenUtility Logo & Brand Header */
@@ -65,18 +102,18 @@
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
-            margin-bottom: 2rem;
             padding: 0.5rem 1.25rem;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
             border-radius: 50px;
             backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .brand-logo {
             width: 28px;
             height: 28px;
-            color: #10b981;
+            color: var(--accent-1);
         }
 
         .brand-title {
@@ -84,35 +121,55 @@
             font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: 1px;
-            color: #ffffff;
+            color: var(--text-color);
         }
 
         .brand-title span {
-            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Theme Toggle & Changelog Buttons */
+        .action-btn {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent-2);
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
             font-weight: 900;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            color: #ffffff;
+            color: var(--text-color);
         }
 
         h1 span {
-            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: #94a3b8;
+        p.hero-desc {
+            color: var(--muted-color);
             font-size: clamp(1rem, 2vw, 1.15rem);
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             font-weight: 300;
             max-width: 600px;
             margin-left: auto;
@@ -125,20 +182,19 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 1.25rem;
             justify-content: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .time-box {
-            background: #0f172a;
-            border: 1px solid #1e293b;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
             position: relative;
-            padding: 1.75rem 1rem;
+            padding: 1.5rem 1rem;
             border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
-        /* Top gradient accent line */
         .time-box::before {
             content: '';
             position: absolute;
@@ -146,26 +202,155 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #10b981, #3b82f6);
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
         }
 
         .time-box span {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-size: clamp(1.8rem, 4vw, 3rem);
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-color);
             display: block;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            margin-bottom: 0.3rem;
         }
 
         .time-box label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #64748b;
+            color: var(--muted-color);
             font-weight: 600;
         }
+
+        /* Status & Uptime Banner */
+        .status-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: var(--muted-color);
+            margin-bottom: 2.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* Widgets Section Grid (Utilities & Roadmap) */
+        .widgets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .widget-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+        }
+
+        .widget-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Mini Developer Tools Styling */
+        .tool-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .tool-group input, .tool-group textarea {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 0.85rem;
+            outline: none;
+            font-family: monospace;
+        }
+
+        .tool-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tool-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .tool-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Roadmap List */
+        .roadmap-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .roadmap-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--muted-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .roadmap-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.planned { background: rgba(59, 130, 246, 0.15); color: var(--accent-2); }
+        .badge.progress { background: rgba(16, 185, 129, 0.15); color: var(--accent-1); }
 
         /* Email Notification Form */
         .notify-form {
@@ -178,38 +363,95 @@
         .notify-form input {
             flex: 1;
             padding: 0.9rem 1.25rem;
-            background: #0f172a;
-            border: 1px solid #1e293b;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
+            color: var(--text-color);
             font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s ease;
         }
 
         .notify-form input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            border-color: var(--accent-2);
         }
 
         .notify-form button {
             padding: 0.9rem 1.8rem;
-            background: linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: opacity 0.3s ease, transform 0.1s ease;
         }
 
         .notify-form button:hover {
             opacity: 0.9;
         }
 
-        .notify-form button:active {
-            transform: scale(0.98);
+        /* Changelog Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 450px;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .modal-content ul {
+            padding-left: 1.2rem;
+            color: var(--muted-color);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: var(--border-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            float: right;
         }
 
         /* Footer Styles */
@@ -219,10 +461,10 @@
             width: 100%;
             text-align: center;
             padding: 1.5rem;
-            color: #64748b;
+            color: var(--muted-color);
             font-size: 0.85rem;
-            border-top: 1px solid rgba(30, 41, 59, 0.5);
-            background: rgba(8, 13, 18, 0.8);
+            border-top: 1px solid var(--border-color);
+            background: var(--footer-bg);
             backdrop-filter: blur(8px);
         }
 
@@ -232,10 +474,13 @@
         }
 
         /* Mobile responsiveness */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .countdown {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
+            }
+            .widgets-grid {
+                grid-template-columns: 1fr;
             }
             .notify-form {
                 flex-direction: column;
@@ -243,23 +488,37 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
     <div class="glow-bg-1"></div>
     <div class="glow-bg-2"></div>
 
     <div class="container">
         
-        <!-- OpenUtility Branding -->
-        <div class="brand-header">
-            <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-            <div class="brand-title">Open<span>Utility</span></div>
+        <!-- Top Bar Controls (Logo, Theme Toggle, Changelog Button) -->
+        <div class="top-controls">
+            <div class="brand-header">
+                <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <div class="brand-title">Open<span>Utility</span></div>
+            </div>
+            <button class="action-btn" onclick="toggleTheme()">
+                <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
+            </button>
+            <button class="action-btn" onclick="toggleModal(true)">
+                📋 Changelog
+            </button>
         </div>
 
         <h1>Something Big Is <span>Coming</span></h1>
-        <p>We are building powerful tools for your next web workflow. Get ready for launch.</p>
+        <p class="hero-desc">We are building powerful tools for your next web workflow. Get ready for launch.</p>
+
+        <!-- Live Status Uptime Monitor -->
+        <div class="status-banner">
+            <span class="status-dot"></span>
+            <span>All systems operational &bull; Core Infrastructure v1.0 online</span>
+        </div>
 
         <!-- Live Countdown Timer -->
         <div class="countdown" id="countdown">
@@ -281,11 +540,50 @@
             </div>
         </div>
 
+        <!-- Widgets Grid (Mini Developer Utilities Hub & Roadmap) -->
+        <div class="widgets-grid">
+            <!-- Mini Tool Card -->
+            <div class="widget-card">
+                <h3>🛠️ Quick Dev Utility</h3>
+                <div class="tool-group">
+                    <input type="text" id="tool-input" placeholder="Type text to convert Base64...">
+                    <div class="tool-btns">
+                        <button class="tool-btn" onclick="encodeBase64()">Encode B64</button>
+                        <button class="tool-btn" onclick="decodeBase64()">Decode B64</button>
+                    </div>
+                    <textarea id="tool-output" rows="2" placeholder="Output result..." readonly></textarea>
+                </div>
+            </div>
+
+            <!-- Interactive Roadmap Card -->
+            <div class="widget-card">
+                <h3>🗺️ Upcoming Roadmap</h3>
+                <ul class="roadmap-list">
+                    <li class="roadmap-item"><span>JSON Formatter & Validator</span> <span class="badge progress">In Progress</span></li>
+                    <li class="roadmap-item"><span>Color Palette Generator</span> <span class="badge planned">v1.1</span></li>
+                    <li class="roadmap-item"><span>API Endpoint Tester</span> <span class="badge planned">v1.2</span></li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Notification Form -->
         <form class="notify-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing! We will notify you at launch.');">
             <input type="email" placeholder="Enter your email address" required>
             <button type="submit">Get Notified</button>
         </form>
+    </div>
+
+    <!-- Changelog Modal -->
+    <div class="modal-overlay" id="changelogModal">
+        <div class="modal-content">
+            <h2>Changelog & Updates</h2>
+            <ul>
+                <li><strong>v1.0.2</strong> - Added client-side mini toolkits and live status indicator.</li>
+                <li><strong>v1.0.1</strong> - Integrated persistent countdown via LocalStorage.</li>
+                <li><strong>v1.0.0</strong> - Initial coming soon layout framework established.</li>
+            </ul>
+            <button class="close-modal" onclick="toggleModal(false)">Close</button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -294,11 +592,10 @@
     </footer>
 
     <script>
-        // Check if a target countdown date already exists in localStorage
+        // 1. Persistent Countdown Logic via localStorage
         let countDownDate = localStorage.getItem("openUtilityLaunchDate");
 
         if (!countDownDate) {
-            // If not, set it to 10 days from the current moment and save it
             countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
             localStorage.setItem("openUtilityLaunchDate", countDownDate);
         } else {
@@ -309,24 +606,79 @@
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
-            // Calculations for Days, Hours, Minutes, and Seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display formatted numbers
             document.getElementById("days").innerText = String(Math.max(0, days)).padStart(2, '0');
             document.getElementById("hours").innerText = String(Math.max(0, hours)).padStart(2, '0');
             document.getElementById("minutes").innerText = String(Math.max(0, minutes)).padStart(2, '0');
             document.getElementById("seconds").innerText = String(Math.max(0, seconds)).padStart(2, '0');
 
-            // Expiry state
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "<h2 style='grid-column: span 4; color: #10b981; font-family: Orbitron, sans-serif;'>OPENUTILITY IS NOW LIVE!</h2>";
+                document.getElementById("countdown").innerHTML = "<h2 style='grid-column: span 4; color: var(--accent-1); font-family: Orbitron, sans-serif;'>OPENUTILITY IS NOW LIVE!</h2>";
             }
         }, 1000);
+
+        // 2. Dark/Light Theme Switcher Logic
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById("theme-icon");
+            const themeText = document.getElementById("theme-text");
+
+            if (body.getAttribute("data-theme") === "dark") {
+                body.setAttribute("data-theme", "light");
+                themeIcon.innerText = "🌙";
+                themeText.innerText = "Dark Mode";
+                localStorage.setItem("openUtilityTheme", "light");
+            } else {
+                body.setAttribute("data-theme", "dark");
+                themeIcon.innerText = "☀️";
+                themeText.innerText = "Light Mode";
+                localStorage.setItem("openUtilityTheme", "dark");
+            }
+        }
+
+        // Load saved theme preference on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem("openUtilityTheme");
+            if (savedTheme === "light") {
+                document.body.setAttribute("data-theme", "light");
+                document.getElementById("theme-icon").innerText = "🌙";
+                document.getElementById("theme-text").innerText = "Dark Mode";
+            }
+        });
+
+        // 3. Changelog Modal Controller
+        function toggleModal(show) {
+            const modal = document.getElementById("changelogModal");
+            if (show) {
+                modal.classList.add("active");
+            } else {
+                modal.classList.remove("active");
+            }
+        }
+
+        // 4. Mini Dev Tool Functionality (Base64 Encoder/Decoder)
+        function encodeBase64() {
+            const input = document.getElementById("tool-input").value;
+            try {
+                document.getElementById("tool-output").value = btoa(input);
+            } catch (e) {
+                document.getElementById("tool-output").value = "Error encoding string";
+            }
+        }
+
+        function decodeBase64() {
+            const input = document.getElementById("tool-input").value;
+            try {
+                document.getElementById("tool-output").value = atob(input);
+            } catch (e) {
+                document.getElementById("tool-output").value = "Invalid Base64 string";
+            }
+        }
     </script>
 </body>
 </html>
